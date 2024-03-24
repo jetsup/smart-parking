@@ -26,8 +26,13 @@ app.use('/', adminRouter);
 
 // static files
 app.use("/js", express.static(__dirname + "/node_modules/bootstrap/dist/js")); // redirect bootstrap JS
-app.use("/js", express.static(__dirname + "/node_modules/jquery/dist")); // redirect JS jQuery
 app.use("/css", express.static(__dirname + "/node_modules/bootstrap/dist/css")); // redirect CSS bootstrap
+
+app.use("/js", express.static(__dirname + "/node_modules/jquery/dist")); // redirect JS jQuery
+
+app.use("/js", express.static(__dirname + "/node_modules/popper.js/dist")); // popperjs
+app.use("/js", express.static(__dirname + "/node_modules/popper.js/esm")); // popperjs
+app.use("/js", express.static(__dirname + "/node_modules/popper.js/umd")); // popperjs
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

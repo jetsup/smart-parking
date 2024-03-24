@@ -1,26 +1,47 @@
 doctype html
-head
-  title login
-  //-link(href='/stylesheets/logn.css' rel='stylesheet')
-  link(href='/css/bootstrap.css' rel='stylesheet')
-form(class="form-horizontal" action='' method='')
-  .imgcontainer
-  .log
-    div(class="form-group")
-        label(class="col-sm-2 control-label" for='username') Email
-        input(class="form-control round-input" id="username" name='username' type='text' placeholder='Enter email')
-    div(class="form-group")
-        label(class="" for='password') Password
-        input(class="form-control round-input" id="password" name='password' type='password' placeholder='Enter password')
-    div(class="form-group")
-        input(class="btn btn-outline-success" type='submit' value="Login")
-    div(class="form-group")
-        input(name='remember' type='checkbox' style='margin-bottom: 15px;')
-        label() Remember me
-    div(class="form-group")
-        p Don&apos;t have an account?
-            a(href='/signup') Sign Up Here
-    div(class="form-group")
-      span.psw
-        Forgot
-        a(href='#') Forgot password?
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Login
+    link(href="/css/bootstrap.css", rel="stylesheet")
+    style.
+      /* Center the form on the screen */
+      .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      /* Add padding to the container */
+      .container {
+        padding: 16px;
+        text-align: center;
+      }
+  body
+    .container
+      form.form-horizontal(action='', method='')
+        .imgcontainer
+          // Add image container if needed
+        .log
+          .form-group
+            label.col-sm-2.control-label(for='username') Username
+            input.form-control.round-input#username(name='username', type='text', placeholder='Enter username')
+          .form-group
+            label(for='password') Password
+            input.form-control.round-input#password(name='password', type='password', placeholder='Enter password')
+          .form-group
+            input.btn.btn-outline-success(type='submit', value="Login")
+          .form-group
+            input(name='remember', type='checkbox', style='margin-bottom: 15px;')
+            label Remember me
+          .form-group
+            p Don't have an account?
+              a(href='/signup') Sign Up Here
+          .form-group
+            span.psw
+              a(href='#') Forgot password?
+
+  script(src="/js/jquery.min.js")
+  script(src="/js/popper.min.js")
+  script(src="/js/bootstrap.min.js")
