@@ -1,4 +1,4 @@
-DROP DATABASE IF NOT EXISTS `parking`;
+DROP DATABASE IF EXISTS `parking`;
 CREATE DATABASE `parking`;
 USE `parking`;
 
@@ -11,18 +11,53 @@ CREATE TABLE IF NOT EXISTS `subscriptions` (
     PRIMARY KEY (`id`)
 );
 
+CREATE TABLE IF NOT EXISTS `user_types` (
+    `id` INT(1) NOT NULL AUTO_INCREMENT,
+    `type` VARCHAR(25) NOT NULL UNIQUE,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+);
+
+INSERT IGNORE INTO `user_types` (`type`) VALUES ('Admin'), ('User');
+
 CREATE TABLE IF NOT EXISTS `users` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
     `first_name` VARCHAR(25) NOT NULL,
     `last_name` VARCHAR(25) NOT NULL,
     `email` VARCHAR(50) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
-    `subscription_id` INT(11) NOT NULL,
+    `user_type_id` INT(1),
     `rfid_tag` VARCHAR(20) NOT NULL UNIQUE,
     `frequency` INT(11) NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_type_id`) REFERENCES `user_types`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `vehicle_types` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `type` VARCHAR(25) NOT NULL UNIQUE,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
+);
+
+INSERT IGNORE INTO `vehicle_types` (`type`) VALUES ('Car'), ('Motorcycle'), ('Bicycle'), ('TukTuk'), ('Truck');
+
+CREATE TABLE IF NOT EXISTS `vehicles` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `user_id` INT(11),
+    `vehicle type_id` INT(2),
+    `number_plate` VARCHAR(10) NOT NULL UNIQUE,
+    `subscription_id` INT(11),
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (`vehicle type_id`) REFERENCES `vehicle_types`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    FOREIGN KEY (`subscription_id`) REFERENCES `subscriptions`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `slots` (
